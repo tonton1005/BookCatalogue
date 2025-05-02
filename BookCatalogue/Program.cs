@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ─────────────
 // In-Memory データベースを登録
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseInMemoryDatabase("BooksDb"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllersWithViews();
 
@@ -18,28 +18,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.EnsureCreated();  // In-Memory DB にはマイグレーション不要
-    if (!db.Books.Any())
-    {
-        db.Books.AddRange(new[]
-        {
-            new Book
-            {
-                Title = "サンプル1",
-                Author = "太郎",
-                PublishedDate = DateTime.Today,
-                Price = 1000
-            },
-            new Book
-            {
-                Title = "サンプル2",
-                Author = "花子",
-                PublishedDate = DateTime.Today,
-                Price = 1000
-            }
-        });
-        db.SaveChanges();
-    }
+    db.Database.Migrate();  // テーブルが無ければ自動で作成
 }
 
 app.UseRouting();
