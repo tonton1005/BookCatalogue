@@ -1,0 +1,30 @@
+## ビルド成果物
+bin/
+obj/
+
+## Visual Studio 関連
+.vs/
+*.user
+*.suo
+*.cache
+*.dbmdl
+*.pdb
+
+## ASP.NET 一時ファイルなど
+App_Data/
+*.log
+
+## NuGet パッケージのローカルキャッシュ
+packages/
+*.nupkg
+
+## Web関連一時ファイル
+*.Publish.xml
+*.publishproj
+
+## OS依存の不要ファイル
+.DS_Store
+Thumbs.db
+
+## 環境ごとの設定（必要に応じて）
+*.env
